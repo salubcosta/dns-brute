@@ -1,0 +1,10 @@
+www
+cpanel
+webmail
+mail
+administrator
+admin
+administrador
+administracao
+restrito
+phpmyadmin
