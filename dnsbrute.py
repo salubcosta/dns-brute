@@ -1,8 +1,6 @@
 import sys
 import dns.resolver
 
-args = sys.argv  # leitura dos argumentos
-
 
 # Carrega arquivo e retorna uma lista de strings
 def carregarWordList(arquivo):
@@ -19,14 +17,24 @@ def montarSubDominio(linhas, site):
         subdominio.append(linha + '.' + site)
     return subdominio
 
+
 try:
-    dominio = args[1]
-    arquivo = args[2]
+    args = sys.argv  # leitura dos argumentos
+    try:
+        dominio = args[1]
+        arquivo = args[2]
+    except:
+        print("Problema ao tentar ler os argumentos!\nExemplo de uso: python dnsbrute.py site.com wordlists.txt")
+        exit()
+
     lista = carregarWordList(arquivo)
-    subdomain = montarSubDominio(lista, dominio)
-    for item in subdomain:
-        respostas = dns.resolver.query(item, "a")
+    subdominio = montarSubDominio(lista, dominio)
+    for sub in subdominio:
+        try:
+            respostas = dns.resolver.query(sub, "a")
+        except:
+            pass
         for resultado in respostas:
-            print(item, resultado)
+            print(sub, resultado)
 except Exception as e:
     print("Ocorreu algum problema. Erro: ", e)
